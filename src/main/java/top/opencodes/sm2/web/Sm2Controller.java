@@ -55,9 +55,7 @@ public class Sm2Controller {
 
     @PostMapping("api/sign")
     public String Sign(@RequestBody SignParam signParam) throws Exception {
-         System.out.println(signParam.getSign_content());
-         System.out.println(signParam.getPrivate_key());
-         System.out.println(signParam.getUser_id());
+
         byte[] signature1=  DCCryptor.CMBSM2SignWithSM3(signParam.getUser_id().getBytes(),signParam.getPrivate_key().getBytes(),signParam.getSign_content().getBytes(StandardCharsets.UTF_8));
 
         return new String(encoder.encode(signature1));

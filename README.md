@@ -15,3 +15,12 @@
 
  java -jar sm2.jar
 ```
+
+
+```json
+{
+    "sign_content":"xxx", 
+    "user_id":"xxxx", 
+    "private_key":"123123"
+}
+```
