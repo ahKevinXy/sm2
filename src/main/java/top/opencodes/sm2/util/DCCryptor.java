@@ -47,6 +47,7 @@ public class DCCryptor {
         return CMBSM4Crypt(key, iv, input, 2);
     }
 
+    // 生成签名
     public static byte[] CMBSM2SignWithSM3(byte[] id, byte privkey[], byte msg[]) throws Exception {
         if (privkey == null || msg == null) {
             throw new Exception("CMBSM2SignWithSM3 input error");
@@ -59,6 +60,7 @@ public class DCCryptor {
         return decodeDERSignature(signer.generateSignature());
     }
 
+    //验签
     public static boolean CMBSM2VerifyWithSM3(byte[] id, byte pubkey[], byte msg[], byte signature[]) throws Exception {
 
         if (pubkey == null || msg == null || signature == null) {
@@ -72,6 +74,7 @@ public class DCCryptor {
         return signer.verifySignature(encodeDERSignature(signature));
     }
 
+    // 加密
     private static byte[] CMBSM4Crypt(byte key[], byte iv[], byte input[], int mode) throws Exception {
         SecretKeySpec spec = new SecretKeySpec(key, "SM4");
         IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);

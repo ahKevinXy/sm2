@@ -1,10 +1,9 @@
 package top.opencodes.sm2.web;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
+import top.opencodes.sm2.dto.SignParam;
+import top.opencodes.sm2.util.DCCryptor;
 import top.opencodes.sm2.util.Sm2KeyHelp;
 
 import java.util.Base64;
@@ -16,7 +15,8 @@ import java.util.Random;
 @Slf4j
 @RestController
 public class Sm2Controller {
-
+    private static Base64.Encoder encoder = Base64.getEncoder();
+    private static Base64.Decoder decoder = Base64.getDecoder();
     @GetMapping("/api/demo/encrypt")
     public String encrypt(@RequestParam String SOURCES,
                           @RequestParam String SM2_PUBKEY_TEST
@@ -44,5 +44,22 @@ public class Sm2Controller {
     public String decrypt() {
         // TODO
         return null;
+    }
+    @GetMapping("/")
+    public String Home(){
+
+        return "这是首页";
+    }
+
+//    @RequestMapping(value = "api/sign",method = RequestMethod.POST,consumes = "application/json")
+
+    @PostMapping("api/sign")
+    public String Sign(@RequestBody SignParam signParam) throws Exception {
+         System.out.println(signParam.getSign_content());
+         System.out.println(signParam.getPrivate_key());
+         System.out.println(signParam.getUser_id());
+        byte[] signature1=  DCCryptor.CMBSM2SignWithSM3(signParam.getUser_id().getBytes(),signParam.getPrivate_key().getBytes(),signParam.getSign_content().getBytes(StandardCharsets.UTF_8));
+
+        return new String(encoder.encode(signature1));
     }
 }
