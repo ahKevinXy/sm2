@@ -7,3 +7,11 @@
 
 
 > 参考 [bouncycastle](https://bouncycastle.org/)
+
+
+> 启动
+
+```bash
+
+ java -jar sm2.jar
+```
