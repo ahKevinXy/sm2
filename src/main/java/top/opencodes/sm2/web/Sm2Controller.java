@@ -1,9 +1,12 @@
 package top.opencodes.sm2.web;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import top.opencodes.sm2.dto.SignParam;
 import top.opencodes.sm2.util.DCCryptor;
+import top.opencodes.sm2.util.DCHelper;
 import top.opencodes.sm2.util.Sm2KeyHelp;
 
 import java.util.Base64;
@@ -56,8 +59,25 @@ public class Sm2Controller {
     @PostMapping("api/sign")
     public String Sign(@RequestBody SignParam signParam) throws Exception {
 
-        byte[] signature1=  DCCryptor.CMBSM2SignWithSM3(signParam.getUser_id().getBytes(),signParam.getPrivate_key().getBytes(),signParam.getSign_content().getBytes(StandardCharsets.UTF_8));
+//        String source = DCHelper.serialJsonOrdered(jObject);
 
+        JsonObject obj = new JsonObject();
+        Gson gson = new Gson();
+        gson.fromJson(signParam.getSign_content(),obj.getClass());
+
+        String source = DCHelper.serialJsonOrdered(obj);
+
+        byte[] signature1=  DCCryptor.CMBSM2SignWithSM3(getID_IV(signParam.getUser_id()),decoder.decode(signParam.getPrivate_key()),source.getBytes(StandardCharsets.UTF_8));
+        System.out.println("加密用户ID："+new String(getID_IV(signParam.getUser_id())));
+        System.out.println("加密私钥:"+signParam.getPrivate_key());
+        System.out.println("加密内容:"+signParam.getSign_content());
+        System.out.println("加密结果:"+new String(encoder.encode(signature1)));
         return new String(encoder.encode(signature1));
+    }
+
+    private static byte[] getID_IV(String uid) {
+       ; // 请替换为实际的用户UID
+        String userid = uid + "0000000000000000";
+        return userid.substring(0, 16).getBytes();
     }
 }

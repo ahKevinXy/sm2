@@ -47,7 +47,7 @@ public class DCCryptor {
         return CMBSM4Crypt(key, iv, input, 2);
     }
 
-    // 生成签名
+    // 生成签名 CMBSM2SignWithSM3
     public static byte[] CMBSM2SignWithSM3(byte[] id, byte privkey[], byte msg[]) throws Exception {
         if (privkey == null || msg == null) {
             throw new Exception("CMBSM2SignWithSM3 input error");
