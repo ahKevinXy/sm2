@@ -61,13 +61,13 @@ public class Sm2Controller {
 
 //        String source = DCHelper.serialJsonOrdered(jObject);
 
-        JsonObject obj = new JsonObject();
-        Gson gson = new Gson();
-        gson.fromJson(signParam.getSign_content(),obj.getClass());
+//        JsonObject obj = new JsonObject();
+//        Gson gson = new Gson();
+//        gson.fromJson(signParam.getSign_content(),obj.getClass());
+//
+//        String source = DCHelper.serialJsonOrdered(obj);
 
-        String source = DCHelper.serialJsonOrdered(obj);
-
-        byte[] signature1=  DCCryptor.CMBSM2SignWithSM3(getID_IV(signParam.getUser_id()),decoder.decode(signParam.getPrivate_key()),source.getBytes(StandardCharsets.UTF_8));
+        byte[] signature1=  DCCryptor.CMBSM2SignWithSM3(getID_IV(signParam.getUser_id()),decoder.decode(signParam.getPrivate_key()),signParam.getSign_content().getBytes(StandardCharsets.UTF_8));
         System.out.println("加密用户ID："+new String(getID_IV(signParam.getUser_id())));
         System.out.println("加密私钥:"+signParam.getPrivate_key());
         System.out.println("加密内容:"+signParam.getSign_content());
