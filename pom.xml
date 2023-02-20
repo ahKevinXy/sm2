@@ -11,6 +11,7 @@
 	<groupId>top.opencodes</groupId>
 	<artifactId>sm2</artifactId>
 	<version>1.0.1</version>
+
 	<name>sm2</name>
 	<description>国密加密</description>
 	<properties>
@@ -74,6 +75,9 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
+			<finalName>sm2</finalName>
+
 	</build>
 
 	<repositories>

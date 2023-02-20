@@ -2,19 +2,25 @@
 
 > 招商银行 国密验签
 
-- [ ] http 请求进行验签加密解密操作
+- [x] http 请求进行验签加密解密操作
 
 - [ ] 命令行进行验签加密解密相关操作
 
 
 > 参考 [bouncycastle](https://bouncycastle.org/)
 
+> 打包
+
+```bash
+./mvnw package
+```
 
 > 启动
 
 ```bash
 
- java -jar sm2.jar
+ java -jar target/sm2.jar --server.port=8081 # 指定端口号
+ 
 ```
 
 
