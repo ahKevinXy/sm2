@@ -1,7 +1,6 @@
 package top.opencodes.sm2.web;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import top.opencodes.sm2.dto.SignParam;
@@ -20,7 +19,7 @@ import java.util.Random;
 public class Sm2Controller {
     private static Base64.Encoder encoder = Base64.getEncoder();
     private static Base64.Decoder decoder = Base64.getDecoder();
-    @GetMapping("/api/demo/encrypt")
+    @GetMapping("/api/encrypt")
     public String encrypt(@RequestParam String SOURCES,
                           @RequestParam String SM2_PUBKEY_TEST
     ) {
@@ -43,7 +42,7 @@ public class Sm2Controller {
         return null;
     }
 
-    @PostMapping("/api/demo/decrypt")
+    @PostMapping("/api/decrypt")
     public String decrypt() {
         // TODO
         return null;
@@ -59,22 +58,16 @@ public class Sm2Controller {
     @PostMapping("api/sign")
     public String Sign(@RequestBody SignParam signParam) throws Exception {
 
-//        String source = DCHelper.serialJsonOrdered(jObject);
-
-//        JsonObject obj = new JsonObject();
-//        Gson gson = new Gson();
-//        gson.fromJson(signParam.getSign_content(),obj.getClass());
-//
-//        String source = DCHelper.serialJsonOrdered(obj);
-
         byte[] signature1=  DCCryptor.CMBSM2SignWithSM3(getID_IV(signParam.getUser_id()),decoder.decode(signParam.getPrivate_key()),signParam.getSign_content().getBytes(StandardCharsets.UTF_8));
-        System.out.println("加密用户ID："+new String(getID_IV(signParam.getUser_id())));
-        System.out.println("加密私钥:"+signParam.getPrivate_key());
-        System.out.println("加密内容:"+signParam.getSign_content());
-        System.out.println("加密结果:"+new String(encoder.encode(signature1)));
+
         return new String(encoder.encode(signature1));
     }
 
+    /**
+     * 处理传递的UID
+     * @param uid
+     * @return
+     */
     private static byte[] getID_IV(String uid) {
        ; // 请替换为实际的用户UID
         String userid = uid + "0000000000000000";
