@@ -71,7 +71,7 @@ http://localhost:8081/api/sign
 
 go ascii码 排序 案例
 
-对 struct 进行map  化 然后再json 处理
+对 struct 进行map  化 然后再json  处理
 
 例子：
 
